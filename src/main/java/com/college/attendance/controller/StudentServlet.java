@@ -29,11 +29,16 @@ public class StudentServlet extends HttpServlet {
             return;
         }
 
-        Student loggedStudent = (Student) session.getAttribute("loggedUser");
+        String tab = request.getParameter("tab");
+        if (tab == null || tab.trim().isEmpty()) {
+            tab = "dashboard";
+        }
 
+        Student loggedStudent = (Student) session.getAttribute("loggedUser");
         List<Subject> subjectSummary = subjectDAO.getStudentSubjectAttendance(loggedStudent.getId());
         List<Attendance> attendanceHistory = attendanceDAO.getAttendanceHistoryByStudent(loggedStudent.getId());
 
+        request.setAttribute("activeTab", tab);
         request.setAttribute("subjectSummary", subjectSummary);
         request.setAttribute("attendanceHistory", attendanceHistory);
 
@@ -45,5 +50,4 @@ public class StudentServlet extends HttpServlet {
             throws ServletException, IOException {
         doGet(request, response);
     }
-    //v1
 }

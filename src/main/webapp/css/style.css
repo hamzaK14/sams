@@ -1,4 +1,4 @@
-/* SAMS — Theme 7: Swiss Grid (Responsive Desktop & Mobile) */
+/* SAMS — Theme 7: Swiss Grid (Expanded & Spacious Multi-Page Edition) */
 @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800;900&display=swap');
 
 :root {
@@ -13,7 +13,6 @@
     --ok: #0a7d3e;
     --warn: #b45309;
     --bad: #d4001a;
-    --r: 0;
     --hf: 'Archivo', "Helvetica Neue", Helvetica, Arial, sans-serif;
     --bf: 'Archivo', "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -23,27 +22,22 @@
     margin: 0;
 }
 
-html {
-    box-sizing: border-box;
-    padding-top: env(safe-area-inset-top, 0px);
-    padding-bottom: env(safe-area-inset-bottom, 0px);
-}
-
-body {
+html, body {
     background: var(--bg);
     color: var(--tx);
-    font: 14px/1.45 var(--bf);
-    -webkit-print-color-adjust: exact;
+    font: 16px/1.55 var(--bf);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
 }
 
-/* Header & Navigation */
+/* Header & Navigation (No Scrollbars) */
 .hd {
     display: flex;
     align-items: stretch;
     flex-wrap: wrap;
-    gap: 20px;
-    padding: 0 40px;
-    min-height: 58px;
+    gap: 32px;
+    padding: 0 56px;
+    min-height: 74px;
     border-bottom: 4px solid #111;
     background: #fff;
 }
@@ -51,9 +45,9 @@ body {
 .brand {
     display: flex;
     align-items: center;
-    font: 900 24px var(--hf);
+    font: 900 30px var(--hf);
     letter-spacing: -.04em;
-    margin-right: 8px;
+    margin-right: 12px;
     text-decoration: none;
     color: #111;
 }
@@ -65,22 +59,27 @@ body {
 
 .hd nav {
     display: flex;
-    gap: 22px;
-    overflow-x: auto;
+    flex-wrap: wrap;
+    gap: 28px;
 }
 
 .hd nav a {
     display: flex;
     align-items: center;
-    font: 600 13px var(--hf);
+    font: 700 15px var(--hf);
     color: #555;
     text-decoration: none;
     margin-bottom: -4px;
-    white-space: nowrap;
-    padding: 8px 0;
+    padding: 12px 2px;
+    border-bottom: 4px solid transparent;
+    transition: color 0.15s;
 }
 
-.hd nav a.on, .hd nav a:hover {
+.hd nav a:hover {
+    color: #111;
+}
+
+.hd nav a.on {
     color: #111;
     border-bottom: 4px solid #2323ff;
 }
@@ -89,8 +88,8 @@ body {
     margin-left: auto;
     display: flex;
     align-items: center;
-    gap: 14px;
-    font-size: 12px;
+    gap: 18px;
+    font-size: 14px;
     color: #555;
 }
 
@@ -100,93 +99,101 @@ body {
 
 .usr a {
     color: #111;
-    font-weight: 700;
-    text-decoration: underline;
+    font-weight: 800;
+    text-decoration: none;
+    border: 2px solid #111;
+    padding: 6px 14px;
+    font-size: 13px;
 }
 
-/* Main Container */
+.usr a:hover {
+    background: #111;
+    color: #fff;
+}
+
+/* Spacious Main Container */
 .main {
-    max-width: 1200px;
+    max-width: 1440px;
     margin: 0 auto;
-    padding: 26px 40px 60px;
+    padding: 44px 56px 90px;
 }
 
-/* Typography */
+/* Giant Swiss Typography */
 h1 {
-    font: 900 clamp(38px, 7vw, 56px)/.95 var(--hf);
+    font: 900 clamp(44px, 6vw, 68px)/.95 var(--hf);
     letter-spacing: -.045em;
 }
 
 .hero-title {
-    font: 900 clamp(48px, 10vw, 88px)/.88 var(--hf);
+    font: 900 clamp(56px, 9vw, 96px)/.9 var(--hf);
     letter-spacing: -.045em;
 }
 
 .sub {
     color: #666;
-    margin: 8px 0 18px;
-    font-size: 14px;
+    margin: 10px 0 26px;
+    font-size: 16px;
 }
 
 h2 {
-    font: 900 18px var(--hf);
-    letter-spacing: -.01em;
+    font: 900 22px var(--hf);
+    letter-spacing: -.015em;
     border-top: 4px solid #111;
-    padding-top: 8px;
-    margin: 0 0 12px;
+    padding-top: 12px;
+    margin: 0 0 18px;
 }
 
 /* Swiss Grid Stats Row */
 .stats {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
-    margin: 16px 0 28px;
+    gap: 36px;
+    margin: 24px 0 44px;
 }
 
 .stats div {
     border-top: 4px solid #111;
-    padding-top: 8px;
+    padding-top: 14px;
 }
 
 .stats b {
     display: block;
-    font: 900 clamp(34px, 5vw, 48px)/1 var(--hf);
+    font: 900 clamp(42px, 5vw, 58px)/1 var(--hf);
     letter-spacing: -.04em;
+    margin-bottom: 6px;
 }
 
 .stats span {
     color: #666;
-    font-size: 12px;
+    font-size: 14px;
+    font-weight: 600;
 }
 
 /* Responsive Layout Grids */
 .g2 {
     display: grid;
+    grid-template-columns: 1.25fr 1fr;
+    gap: 56px;
+    margin-bottom: 40px;
+}
+
+.g2-equal {
+    display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    margin-bottom: 28px;
+    gap: 56px;
+    margin-bottom: 40px;
 }
 
 .g3 {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-    margin-bottom: 28px;
+    gap: 32px;
+    margin-bottom: 32px;
 }
 
-.g4 {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    margin-bottom: 20px;
-}
-
-/* Tables */
+/* Tables (No Horizontal Scrollbar on Desktop) */
 .table-wrap {
     width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
 }
 
 table.t {
@@ -195,19 +202,20 @@ table.t {
 }
 
 .t th {
-    font: 600 11px var(--hf);
+    font: 700 12px var(--hf);
     color: #666;
     text-align: left;
-    padding: 8px 10px 8px 0;
+    padding: 12px 14px 12px 0;
     border-bottom: 2px solid #111;
     text-transform: uppercase;
-    letter-spacing: .02em;
+    letter-spacing: .04em;
 }
 
 .t td {
-    padding: 10px 10px 10px 0;
+    padding: 15px 14px 15px 0;
     border-bottom: 1px solid #ddd;
-    white-space: nowrap;
+    font-size: 15px;
+    vertical-align: middle;
 }
 
 .t td.r, .t th.r {
@@ -216,7 +224,7 @@ table.t {
 }
 
 .t td.n {
-    font-weight: 600;
+    font-weight: 700;
 }
 
 /* Buttons & Chips */
@@ -224,9 +232,9 @@ table.t {
     display: inline-block;
     background: #2323ff;
     color: #fff;
-    font: 800 13px var(--hf);
-    padding: 10px 18px;
-    margin-right: 8px;
+    font: 800 15px var(--hf);
+    padding: 13px 24px;
+    margin-right: 10px;
     border: 2px solid #2323ff;
     cursor: pointer;
     text-decoration: none;
@@ -242,7 +250,7 @@ table.t {
     background: #fff;
     color: #111;
     border: 2px solid #111;
-    padding: 8px 14px;
+    padding: 11px 20px;
 }
 
 .btn.g:hover {
@@ -250,17 +258,12 @@ table.t {
     color: #fff;
 }
 
-.btn.s {
-    padding: 5px 10px;
-    font-size: 12px;
-}
-
 .chip {
     display: inline-block;
     border: 2px solid #111;
-    padding: 5px 14px;
-    font: 700 12px var(--hf);
-    margin-right: 6px;
+    padding: 8px 20px;
+    font: 700 14px var(--hf);
+    margin-right: 8px;
     background: #fff;
     color: #111;
     cursor: pointer;
@@ -273,18 +276,18 @@ table.t {
 }
 
 /* Status Text & Progress Meters */
-.bad { color: #d4001a; font-weight: 700; }
-.warn { color: #b45309; font-weight: 700; }
-.ok { color: #0a7d3e; font-weight: 700; }
+.bad { color: #d4001a; font-weight: 800; }
+.warn { color: #b45309; font-weight: 800; }
+.ok { color: #0a7d3e; font-weight: 800; }
 .mu { color: #666; }
 
 .m {
     display: inline-block;
-    width: 110px;
-    height: 6px;
+    width: 140px;
+    height: 8px;
     background: #e8e8e8;
     vertical-align: middle;
-    margin-right: 8px;
+    margin-right: 10px;
 }
 
 .m i {
@@ -293,22 +296,17 @@ table.t {
     background: #111;
 }
 
-.m.l i {
-    background: #d4001a;
-}
-
-.m.w i {
-    background: #b45309;
-}
+.m.l i { background: #d4001a; }
+.m.w i { background: #b45309; }
 
 /* Forms & Inputs */
 .f {
     width: 100%;
     border: 2px solid #111;
-    padding: 9px 10px;
+    padding: 12px 14px;
     background: #fff;
-    min-height: 40px;
-    font: 600 13px var(--bf);
+    min-height: 48px;
+    font: 600 15px var(--bf);
     color: #111;
     border-radius: 0;
     outline: none;
@@ -320,18 +318,21 @@ table.t {
 
 .lb {
     display: block;
-    font: 600 11px var(--hf);
-    color: #666;
-    margin: 0 0 4px;
+    font: 700 12px var(--hf);
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+    margin: 0 0 6px;
 }
 
 /* Alerts */
 .alert {
     border-left: 6px solid #d4001a;
     background: #fff0f1;
-    padding: 12px 14px;
-    margin-bottom: 20px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
     font-weight: 600;
+    font-size: 15px;
 }
 
 .alert.g {
@@ -356,8 +357,8 @@ table.t {
 
 .seg span {
     display: block;
-    padding: 4px 12px;
-    font: 700 12px var(--hf);
+    padding: 6px 16px;
+    font: 700 13px var(--hf);
     background: #fff;
     color: #111;
 }
@@ -376,65 +377,54 @@ table.t {
 .cal {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 4px;
+    gap: 6px;
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 14px;
 }
 
 .cal span {
-    font: 600 11px var(--hf);
+    font: 700 12px var(--hf);
     color: #666;
-    padding: 4px 0;
+    padding: 6px 0;
 }
 
 .cal i {
-    font: 700 13px var(--hf);
+    font: 800 14px var(--hf);
     font-style: normal;
-    padding: 9px 0;
+    padding: 13px 0;
     background: #f2f2f2;
     color: #888;
 }
 
-.cal i.p {
-    background: #d9f3e3;
-    color: #0a7d3e;
-}
+.cal i.p { background: #d9f3e3; color: #0a7d3e; }
+.cal i.a { background: #ffd9de; color: #d4001a; }
+.cal i.z { background: none; }
 
-.cal i.a {
-    background: #ffd9de;
-    color: #d4001a;
-}
-
-.cal i.z {
-    background: none;
-}
-
-/* Mobile & Tablet Responsive Breakpoints */
-@media (max-width: 860px) {
+/* Responsive Mobile View */
+@media (max-width: 900px) {
     .hd {
-        padding: 10px 18px;
-        height: auto;
-        gap: 12px;
+        padding: 14px 20px;
+        gap: 14px;
     }
     .hd nav {
         order: 3;
         width: 100%;
         border-top: 1px solid #eee;
-        padding-top: 6px;
+        padding-top: 8px;
         gap: 16px;
     }
     .main {
-        padding: 20px 18px 50px;
+        padding: 28px 20px 60px;
     }
     .stats {
         grid-template-columns: repeat(2, 1fr);
-        gap: 16px;
+        gap: 20px;
     }
-    .g2, .g3, .g4 {
+    .g2, .g2-equal, .g3 {
         grid-template-columns: 1fr;
-        gap: 24px;
+        gap: 32px;
     }
     .m {
-        width: 70px;
+        width: 80px;
     }
 }

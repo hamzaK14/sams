@@ -9,14 +9,9 @@ import java.util.List;
 
 public class AttendanceDAO {
 
-    /**
-     * Marks or updates attendance for a student on a specific date.
-     * Uses ON DUPLICATE KEY UPDATE so professors can modify attendance without primary key errors.
-     */
     public boolean markAttendance(Attendance attendance) {
         String sql = "INSERT INTO attendance (student_id, subject_id, attendance_date, status) " +
-                     "VALUES (?, ?, ?, ?) " +
-                     "ON DUPLICATE KEY UPDATE status = ?";
+                     "VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE status = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, attendance.getStudentId());
@@ -24,10 +19,8 @@ public class AttendanceDAO {
             pstmt.setDate(3, attendance.getAttendanceDate());
             pstmt.setString(4, attendance.getStatus());
             pstmt.setString(5, attendance.getStatus());
-            int rowsAffected = pstmt.executeUpdate();
-            return rowsAffected > 0;
+            return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
-            System.err.println("Error in markAttendance: " + e.getMessage());
             e.printStackTrace();
             return false;
         }
@@ -77,6 +70,35 @@ public class AttendanceDAO {
                     att.setSubjectName(rs.getString("subject_name"));
                     history.add(att);
                 }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return history;
+    }
+
+    public List<Attendance> getAllAttendanceHistory() {
+        List<Attendance> history = new ArrayList<>();
+        String sql = "SELECT a.*, s.name AS student_name, s.roll_number, sub.subject_name " +
+                     "FROM attendance a " +
+                     "JOIN students s ON a.student_id = s.student_id " +
+                     "JOIN subjects sub ON a.subject_id = sub.subject_id " +
+                     "ORDER BY a.attendance_date DESC, s.roll_number ASC LIMIT 60";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+                Attendance att = new Attendance(
+                    rs.getInt("attendance_id"),
+                    rs.getInt("student_id"),
+                    rs.getInt("subject_id"),
+                    rs.getDate("attendance_date"),
+                    rs.getString("status")
+                );
+                att.setStudentName(rs.getString("student_name"));
+                att.setRollNumber(rs.getString("roll_number"));
+                att.setSubjectName(rs.getString("subject_name"));
+                history.add(att);
             }
         } catch (Exception e) {
             e.printStackTrace();

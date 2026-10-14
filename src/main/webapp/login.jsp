@@ -11,34 +11,34 @@
 
 <div class="hd">
     <a href="#" class="brand">SAMS<i>.</i></a>
-    <div class="usr">Student Attendance Management System</div>
+    <div class="usr">Student Attendance & Academic Management System</div>
 </div>
 
 <div class="main">
-    <div class="g2" style="align-items: start; margin-top: 24px;">
+    <div class="g2-equal" style="align-items: center; min-height: 70vh;">
         
         <!-- Left Column: Swiss Hero Typography -->
         <div>
             <h1 class="hero-title">Attendance.<br>Tracked.</h1>
-            <p class="sub" style="max-width: 38ch; font-size: 15px; margin-top: 16px;">
-                Mark lectures, watch percentages and stay above 75%.
+            <p class="sub" style="max-width: 42ch; font-size: 18px; margin-top: 20px;">
+                Mark lectures, monitor real-time percentages, and stay above the 75% academic requirement.
             </p>
-            <div class="stats" style="grid-template-columns: repeat(2, 1fr); max-width: 320px; margin-top: 28px;">
+            <div class="stats" style="grid-template-columns: repeat(2, 1fr); max-width: 380px; margin-top: 36px;">
                 <div>
                     <b>75%</b>
-                    <span>Minimum threshold</span>
+                    <span>Required threshold</span>
                 </div>
                 <div>
-                    <b style="color: var(--ac);">MVC</b>
-                    <span>Servlet · JSP · JDBC</span>
+                    <b style="color: var(--ac);">Live</b>
+                    <span>Academic tracking</span>
                 </div>
             </div>
         </div>
 
-        <!-- Right Column: Sign In Form -->
-        <div style="max-width: 400px; width: 100%;">
+        <!-- Right Column: Production Sign In Form -->
+        <div style="max-width: 460px; width: 100%; margin-left: auto; margin-right: auto;">
             <h2>Sign in</h2>
-            <p class="sub">Choose your role to continue.</p>
+            <p class="sub">Select your portal role to continue.</p>
 
             <% if (request.getAttribute("errorMessage") != null) { %>
                 <div class="alert">
@@ -49,26 +49,22 @@
             <form action="<%= request.getContextPath() %>/login" method="post">
                 <input type="hidden" name="role" id="roleInput" value="STUDENT">
 
-                <div style="margin-bottom: 18px;">
+                <div style="margin-bottom: 24px;">
                     <button type="button" class="chip on" id="chipStudent" onclick="selectRole('STUDENT')">Student</button>
-                    <button type="button" class="chip" id="chipProf" onclick="selectRole('PROFESSOR')">Faculty / Admin</button>
-                </div>
-
-                <div style="margin-bottom: 14px;">
-                    <label class="lb">Email / Username</label>
-                    <input type="email" name="email" id="emailInput" class="f" placeholder="hamza@college.edu" required>
+                    <button type="button" class="chip" id="chipProf" onclick="selectRole('PROFESSOR')">Faculty</button>
                 </div>
 
                 <div style="margin-bottom: 18px;">
-                    <label class="lb">Password</label>
-                    <input type="password" name="password" class="f" placeholder="••••••••" required>
+                    <label class="lb">Institutional Email</label>
+                    <input type="email" name="email" id="emailInput" class="f" placeholder="Enter your college email" required>
                 </div>
 
-                <button type="submit" class="btn" style="width: 100%; padding: 12px;">Sign in</button>
+                <div style="margin-bottom: 24px;">
+                    <label class="lb">Password</label>
+                    <input type="password" name="password" class="f" placeholder="Enter your password" required>
+                </div>
 
-                <p class="mu" style="font-size: 12px; margin-top: 14px;">
-                    Demo accounts: <b>hamza@college.edu</b> (Student) / <b>sharma@college.edu</b> (Faculty) · Pass: <b>pass123</b>
-                </p>
+                <button type="submit" class="btn" style="width: 100%; padding: 15px; font-size: 16px;">Sign in</button>
             </form>
         </div>
 
@@ -80,7 +76,6 @@ function selectRole(role) {
     document.getElementById('roleInput').value = role;
     document.getElementById('chipStudent').className = (role === 'STUDENT') ? 'chip on' : 'chip';
     document.getElementById('chipProf').className = (role === 'PROFESSOR') ? 'chip on' : 'chip';
-    document.getElementById('emailInput').placeholder = (role === 'STUDENT') ? 'hamza@college.edu' : 'sharma@college.edu';
 }
 </script>
 </body>

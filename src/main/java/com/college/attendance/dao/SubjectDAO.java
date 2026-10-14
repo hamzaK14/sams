@@ -8,37 +8,46 @@ import java.util.List;
 
 public class SubjectDAO {
 
+    public boolean addSubject(Subject subject) {
+        String sql = "INSERT INTO subjects (subject_code, subject_name, professor_id) VALUES (?, ?, ?)";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, subject.getSubjectCode());
+            pstmt.setString(2, subject.getSubjectName());
+            pstmt.setInt(3, subject.getProfessorId());
+            return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public List<Subject> getAllSubjects() {
         List<Subject> subjects = new ArrayList<>();
-        String sql = "SELECT * FROM subjects";
+        String sql = "SELECT * FROM subjects ORDER BY subject_code ASC";
         try (Connection conn = DBConnection.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
-                Subject sub = new Subject(
+                subjects.add(new Subject(
                     rs.getInt("subject_id"),
                     rs.getString("subject_code"),
                     rs.getString("subject_name"),
                     rs.getInt("professor_id")
-                );
-                subjects.add(sub);
+                ));
             }
         } catch (SQLException e) {
-            System.err.println("Error in getAllSubjects: " + e.getMessage());
             e.printStackTrace();
         }
         return subjects;
     }
 
-    /**
-     * Fetches subject details along with computed attendance statistics for a specific student.
-     */
     public List<Subject> getStudentSubjectAttendance(int studentId) {
         List<Subject> subjects = new ArrayList<>();
         String sql = "SELECT s.subject_id, s.subject_code, s.subject_name, s.professor_id, " +
                      "(SELECT COUNT(*) FROM attendance a WHERE a.subject_id = s.subject_id AND a.student_id = ?) AS total_held, " +
                      "(SELECT COUNT(*) FROM attendance a WHERE a.subject_id = s.subject_id AND a.student_id = ? AND a.status = 'PRESENT') AS total_attended " +
-                     "FROM subjects s";
+                     "FROM subjects s ORDER BY s.subject_code ASC";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, studentId);
@@ -57,7 +66,6 @@ public class SubjectDAO {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Error in getStudentSubjectAttendance: " + e.getMessage());
             e.printStackTrace();
         }
         return subjects;
